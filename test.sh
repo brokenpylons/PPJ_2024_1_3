@@ -16,12 +16,12 @@ do
     declare output=$(./run.sh "$file" /dev/stdout)
     declare expected=$(cat "${file%.*}.censored.txt")
 
-    if [[ "$output" == $(cat "$tokens") ]]
+    if [[ "$output" == "$expected" ]]
     then
-        echo "[OK]"
+        echo -e "\n[OK]"
     else
-        wdiff <(cat - <<<"$output") "$tokens"
-        newline
+        wdiff <(cat - <<<"$output") <(cat - <<<"$expected")
+        echo -e "\n[FAIL]"
         ((err++))
     fi
 done
