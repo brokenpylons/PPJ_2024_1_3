@@ -18,6 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install wdiff
+        run: sudo apt-get install -y wdiff
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
