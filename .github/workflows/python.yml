@@ -1,0 +1,28 @@
+name: Python
+
+on:
+  push:
+    branches: [master]
+    paths:
+        - ".github/workflows/python.yml"
+        - "python/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./python
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Create virtual environment
+      run: python -m venv env
+
+    - name: Install packages
+      run: env/bin/python -m pip install -r requirements.txt
+
+    - name: Test
+      run: ../test.sh
