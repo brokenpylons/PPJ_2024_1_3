@@ -18,10 +18,10 @@ do
 
     if [[ "$output" == "$expected" ]]
     then
-        echo -e "\n[OK]"
+        echo -e "\n[OK]\n"
     else
         wdiff <(cat - <<<"$output") <(cat - <<<"$expected")
-        echo -e "\n[FAIL]"
+        echo -e "\n[FAIL]\n"
         ((err++))
     fi
 done
