@@ -9,12 +9,18 @@ declare -r path=$(dirname $(realpath "$0"))
 
 declare -i err=0
 
+declare -r tmp=$(mktemp)
+
 for file in "$path"/examples/example{0..5}.txt
 do
     echo "$file"
     cat "$file"
-    declare output=$(./run.sh "$file" /dev/stdout)
+
     declare expected=$(cat "${file%.*}.censored.txt")
+
+    :> "$tmp"
+    ./run.sh "$file" "$tmp"
+    declare output=$(cat "$tmp")
 
     if [[ "$output" == "$expected" ]]
     then
@@ -25,5 +31,6 @@ do
         ((err++))
     fi
 done
+rm "$tmp"
 
 exit $err
