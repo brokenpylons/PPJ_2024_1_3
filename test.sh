@@ -9,8 +9,6 @@ declare -r path=$(dirname $(realpath "$0"))
 
 declare -i err=0
 
-declare -r tmp=$(mktemp)
-
 for file in "$path"/examples/example{0..8}.txt
 do
     echo "$file"
@@ -18,9 +16,7 @@ do
 
     declare expected=$(cat "${file%.*}.censored.txt")
 
-    :> "$tmp"
-    ./run.sh "$file" "$tmp"
-    declare output=$(cat "$tmp")
+    declare output=$(./run.sh "$file" >(cat -) >/dev/null)
 
     if [[ "$output" == "$expected" ]]
     then
@@ -31,6 +27,5 @@ do
         ((err++))
     fi
 done
-rm "$tmp"
 
 exit $err
