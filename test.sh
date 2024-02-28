@@ -11,7 +11,7 @@ declare -i err=0
 
 declare -r tmp=$(mktemp)
 
-for file in "$path"/examples/example{0..5}.txt
+for file in "$path"/examples/example{0..8}.txt
 do
     echo "$file"
     cat "$file"
